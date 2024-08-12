@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: balancer-deployment
+  labels:
+    app: my-balancer
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: my-balancer
+  template:
+    metadata:
+      labels:
+        app: my-balancer
+    spec:
+      containers:
+        - name: my-balancer
+          image: alexov3413/balancer:1.0
+          ports:
+            - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5

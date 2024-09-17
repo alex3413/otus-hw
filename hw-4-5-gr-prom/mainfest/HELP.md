@@ -4,10 +4,12 @@
 Для старта приложения необходимо развернуть БД:    
 - postgres:
     - helm install postgresql-otus bitnami/postgresql -f postgres.values.yaml -n otus-user-app
+
 Деплой приложения:
 - user-app
     - helm install otus-user-app ./user-chart -n otus-user-app
-- Сборка и отображение метрик:
+
+Сборка и отображение метрик:
     - prometheus:
         - kubectl create secret generic user-app-user-chart-config --save-config  --from-file scrape-configs.yaml -n otus-user-app
         - helm install user-app-prometheus bitnami/kube-prometheus -f prometheus.values.yaml -n otus-user-app

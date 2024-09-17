@@ -1,5 +1,6 @@
 Создать namespace:
 - kubectl create namespace otus-user-app
+
 Для старта приложения необходимо развернуть БД:    
 - postgres:
     - helm install postgresql-otus bitnami/postgresql -f postgres.values.yaml -n otus-user-app

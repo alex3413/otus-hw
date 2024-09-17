@@ -1,0 +1,7 @@
+- job_name: "prometheus"
+  metrics_path: /api/actuator/prometheus
+  static_configs:
+    - targets: ["user-app-user-chart:80"]
+- job_name: "ingress"
+  static_configs:
+    - targets: ["user-app-user-chart:9113"]

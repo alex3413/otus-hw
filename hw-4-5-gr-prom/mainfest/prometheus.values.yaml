@@ -1,0 +1,10 @@
+prometheus:
+  additionalScrapeConfigs:
+    enabled: true
+    type: external
+    external:
+      name: user-app-user-chart-config
+      key: scrape-configs.yaml
+  service:
+    type: NodePort
+    nodePort: 30010

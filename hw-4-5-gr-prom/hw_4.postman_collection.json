@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "83bc6aee-3a4d-4e32-beee-0255e5882d57",
+		"name": "hw_4",
+		"description": "Testiing user api for monitoring prometheus/grafana learn",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "21361685"
+	},
+	"item": [
+		{
+			"name": "createUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let id = Math.random() * (100 - 1) + 1\r",
+							"pm.collectionVariables.set(\"user_id\", id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":{{user_id}},\r\n    \"username\": \"{{username}}\",\r\n    \"firstName\": \"Vasilii\",\r\n    \"lastName\": \"Ivanov\",\r\n    \"mail\": \"super_vasia@abc.org\",\r\n    \"phone\": \"+700000000\"    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}{{contextPath}}"
+			},
+			"response": []
+		},
+		{
+			"name": "getUserByid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    let id = pm.variables.get(\"user_id\")\r",
+							"    pm.expect(jsonData.id).to.eql(Number(id));\r",
+							"    pm.expect(jsonData.username).to.eql(pm.variables.get(\"username\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseUrl}}{{contextPath}}/1"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteUserById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{baseUrl}}{{contextPath}}/1"
+			},
+			"response": []
+		},
+		{
+			"name": "updateUserById",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"try {\r",
+							"    const response = await pm.sendRequest({\r",
+							"        url: pm.variables.get(\"baseUrl\") +\r",
+							"            pm.variables.get(\"contextPath\") + \"/\" +\r",
+							"            pm.variables.get(\"user_id\"),\r",
+							"        method: \"GET\"\r",
+							"    });\r",
+							"    pm.expect(response.json().lastName).to.eql(\"Ivanov\");\r",
+							"    console.log(response.json());\r",
+							"} catch (err) {\r",
+							"    console.error(err);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Check last name \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.lastName).to.eql(\"Petrov\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"Petrov\",\r\n    \"email\": \"super_vasia@abc.org\",\r\n    \"phone\": \"+700000000\"    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}{{contextPath}}/1"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://arch.homework"
+		},
+		{
+			"key": "contextPath",
+			"value": "/api",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "Vasia",
+			"type": "string"
+		}
+	]
+}

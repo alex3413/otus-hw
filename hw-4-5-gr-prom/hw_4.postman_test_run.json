@@ -1,0 +1,158 @@
+{
+	"id": "90655696-0003-46a4-ae36-d2a7ff2a1e0a",
+	"name": "hw_4",
+	"timestamp": "2024-09-16T07:17:15.515Z",
+	"collection_id": "21361685-83bc6aee-3a4d-4e32-beee-0255e5882d57",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 6,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2024-09-16T07:17:14.543Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "51c5373e-ed3a-4b3c-ab90-824e5cbadda7",
+			"name": "createUser",
+			"url": "http://arch.homework/api/user",
+			"time": 120,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				120
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "2149b5af-d2fe-4134-a571-b588dfd1a74b",
+			"name": "getUserByid",
+			"url": "http://arch.homework/api/user/1",
+			"time": 19,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Your test name": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Your test name": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Your test name": true
+				}
+			]
+		},
+		{
+			"id": "60931970-03e7-47c6-af16-125f36628356",
+			"name": "updateUserById",
+			"url": "http://arch.homework/api/user/1",
+			"time": 46,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Check last name ": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check last name ": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				46
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Check last name ": true
+				}
+			]
+		},
+		{
+			"id": "f1a4561a-970f-4f67-b4a9-d6905b60ad3d",
+			"name": "deleteUserById",
+			"url": "http://arch.homework/api/user/1",
+			"time": 62,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				62
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 247,
+	"collection": {
+		"requests": [
+			{
+				"id": "51c5373e-ed3a-4b3c-ab90-824e5cbadda7",
+				"method": "POST"
+			},
+			{
+				"id": "2149b5af-d2fe-4134-a571-b588dfd1a74b",
+				"method": "GET"
+			},
+			{
+				"id": "60931970-03e7-47c6-af16-125f36628356",
+				"method": "PUT"
+			},
+			{
+				"id": "f1a4561a-970f-4f67-b4a9-d6905b60ad3d",
+				"method": "DELETE"
+			}
+		]
+	}
+}

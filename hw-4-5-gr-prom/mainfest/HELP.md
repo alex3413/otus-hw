@@ -6,8 +6,10 @@
     - helm install postgresql-otus bitnami/postgresql -f postgres.values.yaml -n otus-user-app
 
 Деплой приложения:
-- user-app
-    - helm install otus-user-app ./user-chart -n otus-user-app
+- Создать секрет с конфигом подключения к БД 
+  - kubectl apply -f user-app-secret.yaml -n otus-user-app
+- Deploy user-app
+  - helm install otus-user-app ./user-chart -n otus-user-app
 
 Сборка и отображение метрик:
 - prometheus:

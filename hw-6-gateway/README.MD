@@ -1,3 +1,6 @@
+Скрипты деплоя сервиса ./mainfest/HELP.md (все приложения с енвами деплятся единым чартом)
+Исходный код сервисов https://github.com/alex3413/user/tree/master/source
+Коллекция запросов постман с тестовыми скриптами ./hw_6_gateway.postman_collection.json
 Сервисы:
 - user-app - сервис пользователей, является oauth2ResourceServer
 - user-auth - сервис авторизации, реализован как oauth2Server

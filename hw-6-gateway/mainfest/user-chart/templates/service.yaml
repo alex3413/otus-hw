@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "user-chart.fullname" . }}-user
+  labels:
+    {{- include "user-chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+      {{- include "user-chart.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort.user }}
+      protocol: TCP
+      name: http
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "user-chart.fullname" . }}-auth
+  labels:
+    {{- include "user-chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+      {{- include "user-chart.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort.auth }}
+      protocol: TCP
+      name: http
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "user-chart.fullname" . }}-gateway
+  labels:
+    {{- include "user-chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+      {{- include "user-chart.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort.gateway }}
+      protocol: TCP
+      name: http

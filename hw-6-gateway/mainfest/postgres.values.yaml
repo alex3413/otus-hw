@@ -1,0 +1,6 @@
+global:
+  postgresql:
+    auth:
+      username: otus
+      password: otus
+      database: otus

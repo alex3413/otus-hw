@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "1ce9b066-28e5-4f7a-98bf-f72527dd786f",
+		"name": "hw_6_gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21361685"
+	},
+	"item": [
+		{
+			"name": "registration",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":{{username}},\r\n    \"password\":{{password}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{contextPath}}/registration",
+					"host": [
+						"{{baseUrl}}{{contextPath}}"
+					],
+					"path": [
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserByid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    let id = pm.variables.get(\"user_id\")\r",
+							"    pm.expect(jsonData.id).to.eql(Number(id));\r",
+							"    pm.expect(jsonData.username).to.eql(pm.variables.get(\"username\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}{{contextPath}}{{}}{{userId}}",
+					"host": [
+						"{{baseUrl}}{{contextPath}}{{}}{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUserById",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"try {\r",
+							"    const response = await pm.sendRequest({\r",
+							"        url: pm.variables.get(\"baseUrl\") +\r",
+							"            pm.variables.get(\"contextPath\") + \"/\" +\r",
+							"            pm.variables.get(\"user_id\"),\r",
+							"        method: \"GET\"\r",
+							"    });\r",
+							"    pm.expect(response.json().lastName).to.eql(\"Ivanov\");\r",
+							"} catch (err) {\r",
+							"    console.error(err);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Check last name \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.lastName).to.eql(\"Petrov\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"Petrov\",\r\n    \"email\": \"super_vasia@abc.org\",\r\n    \"phone\": \"+700000000\"    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{contextPath}}{{userPath}}/{{userId}}",
+					"host": [
+						"{{baseUrl}}{{contextPath}}{{userPath}}"
+					],
+					"path": [
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "scope",
+				"value": "openid",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "gateway-secret",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "gateway",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "{{baseUrl}}{{oauth2Token}}",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "{{baseUrl}}{{oauth2Code}}",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "https://oauth.pstmn.io/v1/callback",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "user_auth_token",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"console.log(pm.request.body)"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"console.log(pm.response.body)"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://arch.homework",
+			"type": "string"
+		},
+		{
+			"key": "contextPath",
+			"value": "/api",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "abc",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "abc",
+			"type": "string"
+		},
+		{
+			"key": "oauth2Code",
+			"value": "/oauth2/authorize",
+			"type": "string"
+		},
+		{
+			"key": "oauth2Token",
+			"value": "/oauth2/token",
+			"type": "string"
+		},
+		{
+			"key": "userPath",
+			"value": "/user",
+			"type": "string"
+		}
+	]
+}

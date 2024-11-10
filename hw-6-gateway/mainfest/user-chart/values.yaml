@@ -1,0 +1,92 @@
+# Default values for user-chart.
+
+replicaCount: 1
+replicaAuthCount: 1
+
+image:
+  repository:
+    user: alexov3413/otus-user-app
+    auth: alexov3413/otus-auth-app
+    gateway: alexov3413/otus-gateway-app
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v1.4"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort:
+    user: 8080
+    auth: 9000
+    gateway: 8090
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9113"
+    prometheus.io/scheme: http
+
+  hosts:
+    - host: arch.homework
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: user-app-user-chart-gateway
+              port:
+                number: 80
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+configmap:
+  data:
+    URI_AUTH: http://arch.homework/auth
+    URI_HOST: arch.homework
+    SPRING_CLOUD_KUBERNETES_DISCOVERY_ALL-NAMESPACES: "false"
+    SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql-otus:5432/otus
+
+secret:
+  name: user-app-secret
+  pgUsernameKey: PG_USERNAME
+  pgPasswordKey: PG_PASSWORD
+# Additional volumes on the output Deployment definition.
+volumes: []
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

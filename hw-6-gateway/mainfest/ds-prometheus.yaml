@@ -1,0 +1,5 @@
+datasources:
+- name: Prometheus
+  type: prometheus
+  url: http://user-app-prometheus-kube-p-prometheus.otus-user-app.svc.cluster.local:9090
+  isDefault: true

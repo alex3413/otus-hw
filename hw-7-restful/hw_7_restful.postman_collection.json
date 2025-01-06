@@ -1,0 +1,349 @@
+{
+	"info": {
+		"_postman_id": "9275ae72-90dc-48ab-a89a-53cc68f19d13",
+		"name": "hw_7_restful",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21361685"
+	},
+	"item": [
+		{
+			"name": "registration",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":{{username}},\r\n    \"password\":{{password}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{contextPath}}/registration",
+					"host": [
+						"{{baseUrl}}{{contextPath}}"
+					],
+					"path": [
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserAuditByid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    let id = pm.variables.get(\"user_id\")\r",
+							"    pm.expect(jsonData.id).to.eql(Number(id));\r",
+							"    pm.expect(jsonData.username).to.eql(pm.variables.get(\"username\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}{{contextPath}}{{auditPath}}{{userId}}",
+					"host": [
+						"{{baseUrl}}{{contextPath}}{{auditPath}}{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.eql(\"created\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"otus-architect\",\r\n\t\"description\": \"Проект курса ОТУС по теме \\\"Арихитектура как код\\\"\",\r\n\t\"author\": \"Ovchinnikov A.V.\",\r\n\t\"version\": \"v1.0.0\",\r\n\t\"manifestInfo\": {\r\n\t\t\"version\": \"v1.0.0\",\r\n\t\t\"projectId\": \"null\",\r\n\t\t\"fileId\": \"null\",\r\n\t\t\"components\": [\r\n\t\t\t{\r\n\t\t\t\t\"user-app\": {\r\n\t\t\t\t\t\"title\": \"Пользователи\",\r\n\t\t\t\t\t\"type\": \"service\",\r\n\t\t\t\t\t\"description\": \"микросервис логики работы с пользователями\",\r\n\t\t\t\t\t\"dockerImage\": \"alexov3413/otus-user-app:v1.5\",\r\n\t\t\t\t\t\"links\": [\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\"id\": \"auth-app\",\r\n\t\t\t\t\t\t\t\"type\": \"rest\",\r\n\t\t\t\t\t\t\t\"direction\": \"-->\",\r\n\t\t\t\t\t\t\t\"method\": \"GET\",\r\n\t\t\t\t\t\t\t\"uri\": \"/auth/jwks-set-uri\"\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t],\r\n\t\t\t\t\t\"technologies\": [\r\n\t\t\t\t\t\t\"Java\",\r\n\t\t\t\t\t\t\"Spring\",\r\n\t\t\t\t\t\t\"Oauth2.1\"\r\n\t\t\t\t\t]\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"auth-app\": {\r\n\t\t\t\t\t\"title\": \"Авторизация\",\r\n\t\t\t\t\t\"type\": \"authentication\",\r\n\t\t\t\t\t\"description\": \"Сервис аутентификации и авторизации\",\r\n\t\t\t\t\t\"dockerImage\": \"alexov3413/otus-auth-app:v1.5\",\r\n\t\t\t\t\t\"technologies\": [\r\n\t\t\t\t\t\t\"Java\",\r\n\t\t\t\t\t\t\"Spring\",\r\n\t\t\t\t\t\t\"Oauth2.1\"\r\n\t\t\t\t\t]\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{contextPath}}{{projectPath}}/create",
+					"host": [
+						"{{baseUrl}}{{contextPath}}{{projectPath}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStatusProject",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.response.to.have.body();\r",
+							"    pm.variables.set(\"projectId\", jsonData);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}{{contextPath}}{{projectPath}}/status?projectId={{projectId}}",
+					"host": [
+						"{{baseUrl}}{{contextPath}}{{projectPath}}"
+					],
+					"path": [
+						"status"
+					],
+					"query": [
+						{
+							"key": "projectId",
+							"value": "{{projectId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getManifestByProjectId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}{{contextPath}}{{manifestPath}}/{{projectId}}",
+					"host": [
+						"{{baseUrl}}{{contextPath}}{{manifestPath}}"
+					],
+					"path": [
+						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLatestNotificationByUserId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}{{contextPath}}{{notificationPath}}/{{userId}}",
+					"host": [
+						"{{baseUrl}}{{contextPath}}{{notificationPath}}"
+					],
+					"path": [
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "scope",
+				"value": "openid",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "gateway-secret",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "gateway",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "{{baseUrl}}{{oauth2Token}}",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "{{baseUrl}}{{oauth2Code}}",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "https://oauth.pstmn.io/v1/callback",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "user_auth_token",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"console.log(pm.request.body)"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"console.log(pm.response.body)"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://arch.homework",
+			"type": "string"
+		},
+		{
+			"key": "contextPath",
+			"value": "/api",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "projectId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "abc",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "abc",
+			"type": "string"
+		},
+		{
+			"key": "oauth2Code",
+			"value": "/auth/oauth2/authorize",
+			"type": "string"
+		},
+		{
+			"key": "oauth2Token",
+			"value": "/auth/oauth2/token",
+			"type": "string"
+		},
+		{
+			"key": "userPath",
+			"value": "/user",
+			"type": "string"
+		},
+		{
+			"key": "projectPath",
+			"value": "/project",
+			"type": "string"
+		},
+		{
+			"key": "notificationPath",
+			"value": "/notification",
+			"type": "string"
+		},
+		{
+			"key": "auditPath",
+			"value": "/audit",
+			"type": "string"
+		},
+		{
+			"key": "manifestPath",
+			"value": "/manifest",
+			"type": "string"
+		}
+	]
+}

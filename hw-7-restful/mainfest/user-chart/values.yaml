@@ -1,0 +1,53 @@
+# Default values for user-chart.
+
+replicaCount: 1
+replicaAuthCount: 1
+
+image:
+  repository:
+    user: alexov3413/otus-user-app
+    auth: alexov3413/otus-auth-app
+    gateway: alexov3413/otus-gateway-app
+  tag: "v1.4"
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort:
+    user: 8080
+    auth: 9000
+    gateway: 8090
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9113"
+    prometheus.io/scheme: http
+
+  hosts:
+    - host: arch.homework
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: user-app-user-chart-gateway
+              port:
+                number: 80
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+configMap:
+  name: otus-app-configmap
+
+secret:
+  name: user-app-secret
+  pgUsernameKey: PG_USERNAME
+  pgPasswordKey: PG_PASSWORD

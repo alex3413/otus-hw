@@ -1,0 +1,19 @@
+service:
+  type: NodePort
+  nodePorts:
+    grafana: 30011
+
+persistence:
+  enabled: false
+
+dashboardsProvider:
+  enabled: true
+
+datasources:
+  secretName: ds-secret-prometheus
+
+dashboardsConfigMaps:
+  - configMapName: dashboard-nginx
+    filename: nginx.json
+  - configMapName: dashboard-micrometr-spring
+    filename: micrometer-spring-throughput_rev2.json

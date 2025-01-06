@@ -1,0 +1,45 @@
+# Default values for otus-project-core.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository:
+    manifest: alexov3413/otus-manifest-app
+    project: alexov3413/otus-project-app
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v1.5"
+
+ingress:
+  enabled: false
+  className: nginx
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9113"
+    prometheus.io/scheme: http
+
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort:
+    manifest: 8080
+    project: 8080
+    artefact: 8080
+
+configMap:
+  name: otus-app-configmap
+
+secret:
+  name: user-app-secret
+  pgUsernameKey: PG_USERNAME
+  pgPasswordKey: PG_PASSWORD

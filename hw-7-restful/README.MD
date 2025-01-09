@@ -59,9 +59,12 @@
 
 Файл IDL openapi, реализованного варианта:
 - https://github.com/alex3413/otus-hw/blob/main/hw-7-restful/openapi.yaml
+
 Коллекция запросов постман с тестовыми скриптами:
 - https://github.com/alex3413/otus-hw/blob/main/hw-7-restful/hw_7_restful.postman_collection.json
+
 Скрипты деплоя сервиса:
 - https://github.com/alex3413/otus-hw/blob/main/hw-7-restful/mainfest/HELP.md
+
 Исходный код сервисов:
 - https://github.com/alex3413/user/tree/hw-7-restFul
